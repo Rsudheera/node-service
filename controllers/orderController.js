@@ -133,7 +133,8 @@ exports.fetchUpdates = async (req, res) => {
     // Find orders updated after the lastSyncTime for the given shopId
     const updatedOrders = await Order.find({
       shopId: shopId,
-      // updatedAt: { $gt: new Date(lastSyncTime) },
+      updatedAt: { $gt: new Date(lastSyncTime) },
+      isSynced: false,
     }).sort({ updatedAt: 1 }); // Sort by updatedAt for efficient syncing
 
     // Update isSynced to true for all fetched orders
